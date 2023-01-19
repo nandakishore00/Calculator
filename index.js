@@ -8,25 +8,27 @@ let clear=document.querySelector(".clear");
 let equals=document.querySelector(".equals")
 let operations=document.querySelectorAll(".operation")
 let remove=document.querySelector(".delete");
-let decimal=document.querySelectorAll(".decimal");
+let decimal=document.querySelector(".decimal");
 let firstNumber=document.querySelector(".firstNumber");
 let secondNumber=document.querySelector(".secondNumber");
 numbers.forEach((num)=>{
     num.addEventListener("click",function(){
         handleNumber(this.innerText)
+        secondNumber.innerText=currentValue
     })
 })
+operations.forEach((operation)=>{
+    operation.addEventListener("click",function(){
+        handleOperation(this.innerText)
+    })
+    })
 clear.addEventListener("click",function(){
     currentValue=''
     operator=''
     firstNumber.innerText=''
     secondNumber.innerText=''
 })
-operations.forEach((operation)=>{
-operation.addEventListener("click",function(){
-    handleOperation(this.innerText)
-})
-})
+
 equals.addEventListener("click",function(){
     handleEqual()
     
@@ -34,13 +36,17 @@ equals.addEventListener("click",function(){
 remove.addEventListener("click",function(){
     handleRemove()
 })
+decimal.addEventListener("click",function(){
+    handleDecimal()
+    secondNumber.innerText=currentValue
+})
 function  handleNumber(val){
     if(secondNumber.innerText==''){
         currentValue=''
     }
     if(currentValue.length<20){
         currentValue+=val
-        secondNumber.innerText=currentValue
+        
     }
 }
 function handleOperation(op){
@@ -77,4 +83,9 @@ function handleRemove(){
 }
 function roundNumber(o){
     return Math.round(o*1000)/1000
+}
+function handleDecimal(){
+    if(!currentValue.includes('.')){
+        currentValue+="."
+    }
 }
