@@ -1,24 +1,3 @@
-function add(x,y)
-{
-return x+y
-}
-function subtract(x,y)
-{
-return x-y
-}
-function multiply(x,y)
-{
-return x*y
-}
-function divide(x,y)
-{
-return x/y
-}
-function operate(x,y,symbol){
-    return symbol(x,y)
-}
-
-
 let currentValue=''
 let x=''
 let y=''
@@ -40,7 +19,6 @@ numbers.forEach((num)=>{
 numbers.forEach((keybtn)=>{
     keybtn.focus()
     keybtn.addEventListener("keypress",function(e){
-        
         handleNumber(e.key)
     })  
 })
@@ -52,32 +30,35 @@ clear.addEventListener("click",function(){
 })
 operations.forEach((operation)=>{
 operation.addEventListener("click",function(){
-    firstNumber.innerText=currentValue+' '+this.innerText
-    console.log(currentValue,'op')
     handleOperation(this.innerText)
-
-
 })
 })
 operations.forEach((operation)=>{
     operation.addEventListener("keypress",function(e){
-        
-        firstNumber.innerText=currentValue+' '+e.key
-        
         handleOperation(e.key)
-
     })
     })
 equals.addEventListener("click",function(){
-    handleEqual(this)
+    handleEqual()
     
 })
-equals.addEventListener("keypress",function(e){
-    handleEqual(e.key)
-    
-    
+remove.addEventListener("click",function(){
+    handleRemove()
+})
+document.addEventListener("keyup",function(e){
+    console.log(e)
+    if(e.key==='Enter'){
+        handleEqual()
+    }
+    if(e.key==='Backspace'){
+        handleRemove()
+
+    }
 })
 function  handleNumber(val){
+    if(secondNumber.innerText==''){
+        currentValue=''
+    }
     if(currentValue.length<20){
         currentValue+=val
         secondNumber.innerText=currentValue
@@ -86,31 +67,35 @@ function  handleNumber(val){
 function handleOperation(op){
     operator=op
     x=currentValue
-    currentValue=''
+    firstNumber.innerText=currentValue+' '+op
     secondNumber.innerText=''
 }
-function handleEqual(eq){
+function handleEqual(){
     y=secondNumber.innerText
-    
     x=parseInt(x)
     y=parseInt(y)
-
     if(operator=='+'){
-        operator=add
+        output=x+y
     }
     else if(operator=='-'){
-        operator=subtract
+        output=x-y
     }
     else if(operator=='/'){
-        operator=divide
+        output=x/y
     }
     else if(operator=='x'){
-        operator=multiply
+        output=x*y
     }
-    output = operate(x,y,operator)
-    secondNumber.innerText=output
+    secondNumber.innerText=output.toString()
     currentValue=output.toString()
     console.log(currentValue)
     firstNumber.innerText=''
     operator=''
+}
+function handleRemove(){
+    secondNumber.innerText=secondNumber.innerText.substring(0,currentValue.length-1)
+    currentValue=secondNumber.innerText
+}
+function roundNumber(o){
+    return Math.round(o*1000)/1000
 }
