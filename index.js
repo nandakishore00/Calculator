@@ -16,12 +16,6 @@ numbers.forEach((num)=>{
         handleNumber(this.innerText)
     })
 })
-numbers.forEach((keybtn)=>{
-    keybtn.focus()
-    keybtn.addEventListener("keypress",function(e){
-        handleNumber(e.key)
-    })  
-})
 clear.addEventListener("click",function(){
     currentValue=''
     operator=''
@@ -33,27 +27,12 @@ operation.addEventListener("click",function(){
     handleOperation(this.innerText)
 })
 })
-operations.forEach((operation)=>{
-    operation.addEventListener("keypress",function(e){
-        handleOperation(e.key)
-    })
-    })
 equals.addEventListener("click",function(){
     handleEqual()
     
 })
 remove.addEventListener("click",function(){
     handleRemove()
-})
-document.addEventListener("keyup",function(e){
-    console.log(e)
-    if(e.key==='Enter'){
-        handleEqual()
-    }
-    if(e.key==='Backspace'){
-        handleRemove()
-
-    }
 })
 function  handleNumber(val){
     if(secondNumber.innerText==''){
