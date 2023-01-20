@@ -13,6 +13,10 @@ let firstNumber=document.querySelector(".firstNumber");
 let secondNumber=document.querySelector(".secondNumber");
 numbers.forEach((num)=>{
     num.addEventListener("click",function(){
+        if(output!=0){
+            secondNumber.innerText=''
+            output=0
+        }
         handleNumber(this.innerText)
         secondNumber.innerText=currentValue
     })
@@ -30,7 +34,8 @@ clear.addEventListener("click",function(){
 })
 
 equals.addEventListener("click",function(){
-    handleEqual()
+    if(currentValue!='' )
+    {handleEqual()}
     
 })
 remove.addEventListener("click",function(){
@@ -44,7 +49,7 @@ function  handleNumber(val){
     if(secondNumber.innerText==''){
         currentValue=''
     }
-    if(currentValue.length<20){
+    if(currentValue.length<5){
         currentValue+=val
         
     }
@@ -57,8 +62,8 @@ function handleOperation(op){
 }
 function handleEqual(){
     y=secondNumber.innerText
-    x=parseInt(x)
-    y=parseInt(y)
+    x=Number(x)
+    y=Number(y)
     if(operator=='+'){
         output=x+y
     }
@@ -71,9 +76,9 @@ function handleEqual(){
     else if(operator=='x'){
         output=x*y
     }
+    output=roundNumber(output)
     secondNumber.innerText=output.toString()
     currentValue=output.toString()
-    console.log(currentValue)
     firstNumber.innerText=''
     operator=''
 }
